@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8">
   <title>이벤트 당첨자 확인</title>
   <style>
-    body { font-family: sans-serif; padding: 20px; max-width: 600px; margin: auto; }
-    input { margin: 5px 0; padding: 6px; width: 100%; }
-    button { padding: 8px 16px; margin-top: 10px; }
-    #result { margin-top: 20px; font-weight: bold; }
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      max-width: 600px;
+      margin: auto;
+    }
+
+    input {
+      margin: 5px 0;
+      padding: 6px;
+      width: 100%;
+    }
+
+    button {
+      padding: 8px 16px;
+      margin-top: 10px;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+    }
   </style>
 </head>
+
 <body>
 
   <h2>학회비 납부 및 이벤트 내역 확인</h2>
@@ -18,6 +38,13 @@
   <button onclick="checkMember()">확인</button>
 
   <div id="result"></div>
+
+  <h3>🎯 관리자용 이벤트 추가</h3>
+  <input type="text" id="adminName" placeholder="이름" />
+  <input type="text" id="adminId" placeholder="학번" />
+  <input type="text" id="adminEvent" placeholder="이벤트 이름" />
+  <button onclick="addEvent()">이벤트 추가</button>
+  <div id="adminResult"></div>
 
   <script>
     let memberList = [];
@@ -57,7 +84,25 @@
       resultEl.innerHTML = html;
       resultEl.style.color = 'green';
     }
+
+    function addEvent() {
+      const name = document.getElementById('adminName').value.trim();
+      const studentId = document.getElementById('adminId').value.trim();
+      const newEvent = document.getElementById('adminEvent').value.trim();
+      const resultEl = document.getElementById('adminResult');
+
+      fetch('https://script.google.com/macros/s/AKfycbyL-Dh92z36WRX1o5vnHzKntnU5uufi3Fs8ATITdj0BnRGUIUieeRTyg3dBjQOfrJMsjg/exec', {
+        method: 'POST',
+        body: JSON.stringify({ name, studentId, newEvent }),
+        headers: { 'Content-Type': 'application/json' }
+      })
+        .then(res => res.text())
+        .then(text => {
+          resultEl.textContent = text;
+        });
+    }
   </script>
 
 </body>
+
 </html>
