@@ -91,14 +91,15 @@
       const newEvent = document.getElementById('adminEvent').value.trim();
       const resultEl = document.getElementById('adminResult');
 
-      fetch('https://script.google.com/macros/s/AKfycbyL-Dh92z36WRX1o5vnHzKntnU5uufi3Fs8ATITdj0BnRGUIUieeRTyg3dBjQOfrJMsjg/exec', {
-        method: 'POST',
-        body: JSON.stringify({ name, studentId, newEvent }),
-        headers: { 'Content-Type': 'application/json' }
-      })
+      const url = `https://script.google.com/macros/s/AKfycbyL-Dh92z36WRX1o5vnHzKntnU5uufi3Fs8ATITdj0BnRGUIUieeRTyg3dBjQOfrJMsjg/exec?name=${encodeURIComponent(name)}&studentId=${encodeURIComponent(studentId)}&newEvent=${encodeURIComponent(newEvent)}`;
+
+      fetch(url)
         .then(res => res.text())
         .then(text => {
           resultEl.textContent = text;
+        })
+        .catch(err => {
+          resultEl.textContent = '❌ 오류 발생: ' + err;
         });
     }
   </script>
