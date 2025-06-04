@@ -112,7 +112,13 @@
         });
     }
 
-
+    //#nameInput에서 enter 키 입력시 checkmember 함수 호출 (확인버튼 누른 것과 동일)
+    const inputEnter = document.getElementById('nameInput');
+    inputEnter.addEventListener('keydown' , function(e) {
+      if (e.key === 'Enter') {
+        checkMember();
+      }
+    })
   </script>
 
 </body>
